@@ -14,6 +14,8 @@
 		<java.version>1.8</java.version>
 		<!-- 定义 xxlJob 版本号 -->
 		<xxl.version>2.2.0</xxl.version>
+		<!-- 定义 MybatisPlus 版本号 -->
+		<mybatis-plus.version>3.4.1</mybatis-plus.version>
 	</properties>
 
 	<!-- spring boot 父节点依赖, 引入这个之后相关的引入就不需要添加version配置， spring boot会自动选择最合适的版本进行添加。 -->
@@ -94,6 +96,24 @@
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
+		</dependency>
+
+		<!-- 引入 MybatisPlus 依赖 -->
+		<dependency>
+			<groupId>com.baomidou</groupId>
+			<artifactId>mybatis-plus-boot-starter</artifactId>
+			<version>${mybatis-plus.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.baomidou</groupId>
+			<artifactId>mybatis-plus-generator</artifactId>
+			<version>${mybatis-plus.version}</version>
+		</dependency>
+		<!-- MybatisPlus 支持的默认模板引擎 -->
+		<dependency>
+			<groupId>org.apache.velocity</groupId>
+			<artifactId>velocity-engine-core</artifactId>
+			<version>2.2</version>
 		</dependency>
 
 	</dependencies>

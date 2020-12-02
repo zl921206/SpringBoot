@@ -37,7 +37,11 @@ public class XxlJobConfig {
 
     private int logRetentionDays = -1;
 
-    @Bean
+    /**
+     * 暂时注释，防止启动后，控制台打印xxl-job相关的报错信息
+     * @return
+     */
+//    @Bean
     public XxlJobSpringExecutor xxlJobExecutor() {
         System.out.println(">>>>>>>>>>> xxl-job config init.");
         XxlJobSpringExecutor xxlJobSpringExecutor = new XxlJobSpringExecutor();

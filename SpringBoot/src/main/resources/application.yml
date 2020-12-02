@@ -39,6 +39,23 @@ spring:
   profiles:
     active: dev
 
+mybatis-plus:
+  mapper-locations: classpath:xml/*Mapper.xml
+  typeAliasesPackage: com.demo.entity
+  configuration:
+    # 是否开启自动驼峰命名规则（camel case）映射
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+  # 全局策略配置
+  global-config:
+    # 是否控制台 print mybatis-plus 的 LOGO
+    banner: true
+    db-config:
+      # id类型
+      id-type: auto
+      # 表名是否使用下划线命名，默认数据库表使用下划线命名
+      table-underline: true
+
 # xxl-job 任务调度中心
 xxl:
   job:
