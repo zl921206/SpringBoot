@@ -30,7 +30,7 @@ public class RequestParameterVerify {
                     .map(ConstraintViolation::getMessage)
                     .reduce((m1, m2) -> m1 + "|" + m2)
                     .orElse("请求参数不全！");
-            throw new RuntimeException("请求参数为空！");
+            throw new RuntimeException(messages);
         }
     }
 }

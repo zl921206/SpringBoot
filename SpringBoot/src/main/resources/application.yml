@@ -69,3 +69,7 @@ xxl:
       logretentiondays: 30
       appname: name
     accessToken:
+
+jwt:
+  # 自行配置密钥
+  secret: test

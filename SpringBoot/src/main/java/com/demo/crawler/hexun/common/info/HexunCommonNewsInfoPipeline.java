@@ -25,7 +25,7 @@ public class HexunCommonNewsInfoPipeline implements Pipeline<HexunCommonNewsInfo
     public void process(HexunCommonNewsInfo bean) {
         log.info("开始爬取和讯网股票信息......");
         String url = bean.getContentUrl();
-        if (StringUtils.isNotEmpty(url)) {
+        if (!StringUtils.isEmpty(url)) {
             GeccoEngine.create()
                     .classpath("com.demo.crawler.hexun.common.content")
                     .start(new HttpGetRequest(url))

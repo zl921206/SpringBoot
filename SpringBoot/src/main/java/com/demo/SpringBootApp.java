@@ -3,6 +3,7 @@ package com.demo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.servlet.ServletComponentScan;
 
 /**
  * Spring Boot 启动类
@@ -10,6 +11,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  *
  */
 @SpringBootApplication
+// 开启过滤器扫描
+@ServletComponentScan
 @Slf4j
 public class SpringBootApp {
 
