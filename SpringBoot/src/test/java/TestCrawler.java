@@ -1,3 +1,4 @@
+import com.demo.crawler.eastmoney.EastmoneyNewsFlashPipeline;
 import com.demo.crawler.hexun.common.info.HexunCommonNewsInfoPipeline;
 import com.geccocrawler.gecco.GeccoEngine;
 import com.geccocrawler.gecco.pipeline.Pipeline;
@@ -54,5 +55,33 @@ public class TestCrawler {
                     .mobile(false)
                     .run();
         }
+    }
+
+    /**
+     * 东方财富网资讯地址
+     */
+    public static final String url_eastmoney = "https://kuaixun.eastmoney.com/";
+
+    @Resource
+    private EastmoneyNewsFlashPipeline eastmoneyNewsFlashPipeline;
+
+    /**
+     * 东方财富网爬虫
+     */
+    @Test
+    public void crawlerEastmoneyStockTest() {
+        GeccoEngine.create()
+                .classpath("com.demo.crawler.eastmoney")
+                .start(new HttpGetRequest(url_eastmoney))
+                .thread(1)
+                .pipelineFactory(new PipelineFactory() {
+                    @Override
+                    public Pipeline<? extends SpiderBean> getPipeline(String name) {
+                        return eastmoneyNewsFlashPipeline;
+                    }
+                })
+                .loop(false)
+                .mobile(false)
+                .run();
     }
 }

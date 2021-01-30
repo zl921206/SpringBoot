@@ -2,16 +2,14 @@ package com.demo.crawler.eastmoney;
 
 import com.geccocrawler.gecco.annotation.PipelineName;
 import com.geccocrawler.gecco.pipeline.Pipeline;
-import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
-
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.TemporalAccessor;
-import java.time.temporal.TemporalField;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+@Component
 @PipelineName("eastmoneyNewsFlashPipeline")
 public class EastmoneyNewsFlashPipeline implements Pipeline<EastmoneyNewsFlashDto> {
 
