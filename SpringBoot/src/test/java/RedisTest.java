@@ -8,10 +8,12 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringBootTest(classes = com.demo.SpringBootApp.class)
+@SpringBootTest(classes = com.demo.SpringBootApp.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class RedisTest {
 
     @Resource
@@ -29,7 +31,8 @@ public class RedisTest {
         user.setToken("ABCDEFG");
         user.setCreateTime(LocalDateTime.now());
         user.setUpdateTime(new Date());
-        redisService.setCacheObject("user:" + userId, user);
+        redisService.setCacheObject("user:" + userId, user, 30L, TimeUnit.SECONDS);
+        System.out.println("存入时间：" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
     }
 
     /**

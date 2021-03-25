@@ -11,6 +11,7 @@ import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.connection.lettuce.LettucePoolingClientConfiguration;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.listener.RedisMessageListenerContainer;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
@@ -115,5 +116,18 @@ public class RedisConfig {
         template.setHashValueSerializer(jackson2JsonRedisSerializer);
         template.afterPropertiesSet();
         return template;
+    }
+
+    /**
+     * 配置redis消息监听器
+     * @param lettuceConnectionFactory
+     * @return
+     * 注：若要使监听器生效，需要修改redis.conf 配置文件中：notify-keyspace-events ""， 改为：notify-keyspace-events "Ex"
+     */
+    @Bean
+    public RedisMessageListenerContainer container(LettuceConnectionFactory lettuceConnectionFactory){
+        RedisMessageListenerContainer container = new RedisMessageListenerContainer();
+        container.setConnectionFactory(lettuceConnectionFactory);
+        return container;
     }
 }
