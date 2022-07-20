@@ -13,7 +13,7 @@
 		<!-- 配置JDK编译版本. -->
 		<java.version>1.8</java.version>
 		<!-- 定义 xxlJob 版本号 -->
-		<xxl.version>2.2.0</xxl.version>
+		<xxl.version>2.3.0</xxl.version>
 		<!-- 定义 MybatisPlus 版本号 -->
 		<mybatis-plus.version>3.4.1</mybatis-plus.version>
 	</properties>
