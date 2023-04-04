@@ -13,6 +13,7 @@ import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import java.util.Collections;
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Pattern;
 
 /**
  * Redis分布式锁工具类
@@ -117,5 +118,57 @@ public class RedisLockUtil {
 
     /** -------------------------------   使用 Jedis客户端实现分布式锁 ----------------------------- */
 
+
+
+    private static final String DELIMITER = "|";
+
+    /**
+     * 获取锁
+     *
+     * @param lockKey lockKey
+     * @param uuid    UUID
+     * @param timeout 超时时间
+     * @param unit    过期单位
+     * @return true or false
+     */
+    public static boolean lock(String lockKey, final String uuid, long timeout, final TimeUnit unit) {
+        final long milliseconds = Expiration.from(timeout, unit).getExpirationTimeInMilliseconds();
+//        Boolean success = stringRedisTemplate.opsForValue().setIfAbsent(lockKey, (System.currentTimeMillis() + milliseconds) + DELIMITER + uuid,timeout, TimeUnit.SECONDS);
+        Boolean success = staticRedisTemplate.opsForValue().setIfAbsent(lockKey, (System.currentTimeMillis() + milliseconds) + DELIMITER + uuid);
+
+        if (success != null && success) {
+            staticRedisTemplate.expire(lockKey, timeout, TimeUnit.SECONDS);
+        } else {
+            String oldVal = (String) staticRedisTemplate.opsForValue().getAndSet(lockKey, (System.currentTimeMillis() + milliseconds) + DELIMITER + uuid);
+            if (oldVal == null) {
+                return false;
+            }
+            final String[] oldValues = oldVal.split(Pattern.quote(DELIMITER));
+            if (Long.parseLong(oldValues[0]) + 1 <= System.currentTimeMillis()) {
+                return true;
+            }
+
+            success = false;
+        }
+        return success;
+    }
+
+    /**
+     * @param lockKey key
+     * @param uuid    client(最好是唯一键的)
+     */
+    public static void doUnlock(final String lockKey, final String uuid) {
+        String val = (String) staticRedisTemplate.opsForValue().get(lockKey);
+        if (val == null) {
+            return;
+        }
+        final String[] values = val.split(Pattern.quote(DELIMITER));
+        if (values.length <= 0) {
+            return;
+        }
+        if (uuid.equals(values[1])) {
+            staticRedisTemplate.delete(lockKey);
+        }
+    }
 
 }
